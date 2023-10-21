@@ -1,22 +1,20 @@
 use std::io;
 
+struct Cli {
+    pattern: String,
+    path: std::path::PathBuf,
+}
+
 fn main() {
-    println!("Input a name");
+    let pattern = std::env::args().nth(1).expect("no pattern given");
+    let path = std::env::args().nth(2).expect("no path given");
+    let args = Cli {
+        path: std::path::PathBuf::from(path),
+        pattern: pattern,
+    };
+    let path_str = args.path.as_os_str().to_str();
 
-    let mut name = String::new();
-    let mut array = [2; 1];
-
-    io::stdin().read_line(&mut name).expect("Expected name");
-
-    println!("Selected name {name}");
-
-    iterate(&array);
-
-    println!("EOL;\n");
-
-    array = [3];
-
-    iterate(&array);
+    println!("{path_str:?}");
 }
 
 fn iterate(array: &[i32]) {
